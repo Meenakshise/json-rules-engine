@@ -18,5 +18,16 @@ Operators.push(new Operator('lessThan', (a, b) => a < b, numberValidator))
 Operators.push(new Operator('lessThanInclusive', (a, b) => a <= b, numberValidator))
 Operators.push(new Operator('greaterThan', (a, b) => a > b, numberValidator))
 Operators.push(new Operator('greaterThanInclusive', (a, b) => a >= b, numberValidator))
+Operators.push(new Operator('Between', function (a, b) 
+{  
+  if(Array.isArray(b) && b.length == 2){
+    if(a >= b[0] && a <= b[1])
+    return true;
+    else 
+    return false;
+  }
+  return false; 
+}, numberValidator))
+ 
 
 export default Operators

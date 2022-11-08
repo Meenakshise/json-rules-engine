@@ -32,22 +32,44 @@ async function start() {
   engine.addRule({
     // define the 'conditions' for when "hello world" should display
     conditions: {
-      all: [{
-        fact: 'displayMessage',
-        operator: 'equal',
-        value: "iphone",
-       // path: "childobj.phoneNumbers[0].type"
-       path: "childobj.phoneNumbers.[?(@.number=='15')].type"
-      }]
+        all: [{
+            fact: 'displayMessage',
+            operator: 'in',
+            value: ['A'],
+            path: "$.data.dataReading.consciousness.value"
+          }        ]          
     },
     // define the 'event' that will fire when the condition evaluates truthy
     event: {
-      type: 'message',
+      "type" : "message",
       params: {
-        data: 'hello-world!'
+        score: 0
       }
     }
   })
+
+  engine.addRule({
+    // define the 'conditions' for when "hello world" should display
+    conditions: {
+      all: [{
+          fact: 'displayMessage',
+          operator: 'in',
+          value: ['C','V','P','U'],
+          path: "$.data.dataReading.consciousness.value"
+        }        ]     
+    },
+    // define the 'event' that will fire when the condition evaluates truthy
+    event: {
+      "type" : "message",
+      params: {
+        score: 3
+      }
+    }
+  })
+
+  
+
+ 
 
   /**
    * Define a 'displayMessage' as a constant value
@@ -58,17 +80,21 @@ async function start() {
 
   const facts = {
     displayMessage: {
-      "childobj": {
-        "age": 15, "phoneNumbers": [
-          {
-            "type": "iphone",
-            "number": 10
+      "data": {
+        "dataReading": {
+          "RespRate": {
+            "value": 10,
+            "unmeasurable": ""
           },
-          {
-            "type": "home",
-            "number": 15
-          }
-        ]
+          "Temperature": {
+            "unmeasurable": "",
+            "value": 37.2
+          },
+          "consciousness": {
+            "value": "A",
+            "unmeasurable": ""
+          }          
+        }
       }
     }
   }
@@ -76,7 +102,7 @@ async function start() {
   // engine.run() evaluates the rule using the facts provided
   const { events } = await engine.run(facts)
 
-  events.map(event => console.log(event.params.data.green))
+  events.map(event => console.log(event.params.score))
 }
 
 start()

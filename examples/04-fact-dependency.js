@@ -75,6 +75,9 @@ async function start () {
     .on('failure', event => {
       console.log(facts.accountId + ' did ' + 'NOT'.red + ' meet conditions for the ' + event.type.underline + ' rule.')
     })
+    .on('five-year-tenure', function( event,almanac,ruleResult)  {
+      console.log(facts.accountId + ' 5 year tenure event ' + 'NOT'.red + ' meet conditions for the ' + ' rule.')
+    })
 
   /**
    * 'account-information' fact executes an api call and retrieves account data
